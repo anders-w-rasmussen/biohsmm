@@ -4,7 +4,7 @@ Python package for making custom genome annotation algorithms with Hidden semi-M
 # Installing
 
 ```bash
-pip install git https://github.com/anders-w-rasmussen/peak-maker
+> pip install git https://github.com/anders-w-rasmussen/peak-maker
 ```
 
 Now install eigen3 (eigen.tuxfamily.org), version 3+ (gonna fix this in the future)
