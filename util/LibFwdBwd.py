@@ -67,7 +67,7 @@ libfilename = 'libfwdbwd.so'
 hasEigenLibReady = True
 
 try:
-    lib = ctypes.cdll.LoadLibrary(os.path.join(libpath, libfilename))
+    lib = ctypes.cdll.LoadLibrary(os.path.join(dir_path, libfilename))
     lib.FwdAlg.restype = None
     lib.FwdAlg.argtypes = \
         [ndpointer(ctypes.c_double),

@@ -1,5 +1,5 @@
 import numpy as np
-from LibFwdBwd import FwdAlg_cpp, BwdAlg_cpp
+from util.LibFwdBwd import FwdAlg_cpp, BwdAlg_cpp
 
 
 def exp_log_lik(log_soft_ev, axis=1):

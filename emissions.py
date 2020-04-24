@@ -57,17 +57,23 @@ class binary:
 
         # Calculate likelihood vector
         for i in range(0, T):
-            likelihood[i] = p_vec[int(obs[i])]
+            if np.isnan(obs[i]) == True:
+                likelihood[i] = 1
+            else:
+                likelihood[i] = p_vec[int(obs[i])]
 
         return likelihood
 
     def update_state_parameters(self, obs, gammas):
 
+
+        idxs = np.argwhere(np.isfinite(obs) == True).flatten()
+
         T = np.size(obs)
 
         # Calculate expected counts
-        p1_ss = np.dot(gammas, obs)
-        p0_ss = np.dot(gammas, np.ones(T) - obs)
+        p1_ss = np.dot(gammas[idxs], obs[idxs])
+        p0_ss = np.dot(gammas[idxs], np.ones(T)[[idxs]] - obs[idxs])
 
         # Update posterior
         self.p1 = psi(self.pseudo1 + p1_ss) - psi(self.pseudo0 + p0_ss + self.pseudo1 + p1_ss)

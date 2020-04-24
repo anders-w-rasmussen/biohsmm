@@ -1,5 +1,5 @@
 import numpy as np
-from HMM_functions import fwd_bwd_alg
+from util.HMM_functions import fwd_bwd_alg
 from scipy.special import psi
 
 def baum_welch_alg(pi_prior, tmat_prior, pi, tmat, states, likelihood, obs):
