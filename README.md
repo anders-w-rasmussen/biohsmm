@@ -7,12 +7,11 @@ Python package for making custom genome annotation algorithms with Hidden semi-M
 > pip install git https://github.com/anders-w-rasmussen/peakmaker
 ```
 
-Now install eigen3 (eigen.tuxfamily.org), version 3+ (gonna fix this in the future)
+You need to have eigen3 installed. (eigen.tuxfamily.org), version 3+ (gonna fix this in the future). 
+Next go to the folder where peak-maker is installed cd into directory util/
+
 ```bash
 > export EIGENPATH=/path/to/eigen3/ 
-```
-Next go to the folder where peak-maker is installed cd into directory util/
-```bash
 > g++ libbwdbwd.cpp -o libfwdbwd.so --shared -fPIC -DNDEBUG -O3 -I$EIGENPATH 
 ```
 
