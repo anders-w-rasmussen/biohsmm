@@ -1,8 +1,8 @@
-
 # peakmaker
 <img src=/doc_files/pyclassifier.png alt="drawing" width="275"/>
 
 Python package for making custom genome annotation algorithms with Hidden semi-Markov Models
+Created by: Anders Rasmussen, Mariano Gabitto
 
 
 
@@ -67,6 +67,44 @@ plt.show()
 
 ```
 
+Now lets create an HsMM model
+
+```python
+from model import model_1 as model
+import states as states
+import emissions as emits
+
+# State list
+state_list = []
+
+# Emission list for state 1
+emit_1 = []
+emit_1.append(emits.normal_dist_emit([0, 100, 5, 1], emit_name='norm_emit'))
+emit_1.append(emits.binary([5000, 10], emit_name='bern_emit'))
+pseudo_1 = np.array([100, 5000])
+state_list.append(states.Negative_Binomial('bkg', 3, pseudo_1, emit_1))
+
+# Emission list for state 2 (enhancer)
+emit_2 = []
+emit_2.append(emits.normal_dist_emit([0.5, 100, 5, 1], emit_name='norm_emit'))
+emit_2.append(emits.binary([5000, 500], emit_name='bern_emit'))
+pseudo_2 = np.array([100, 2000])
+state_list.append(states.Negative_Binomial('enhancer', 3, pseudo_2, emit_2))
+
+# Emission list for state 3 (silencer)
+emit_3 = []
+emit_3.append(emits.normal_dist_emit([-0.5, 100, 5, 1], emit_name='norm_emit'))
+emit_3.append(emits.binary([5000, 500], emit_name='bern_emit'))
+pseudo_3 = np.array([100, 2000])
+state_list.append(states.Negative_Binomial('silencer', 3, pseudo_3, emit_3))
+
+# Define the pi prior and tmat prior (initial probability and transition matrix)
+
+pi_prior = [1, 1, 1]
+tmat_prior = np.ones((3, 3)) - np.identity(3)
+hsmm_model = model(pi_prior, tmat_prior, state_list)
+
+'''  
 
 
 
