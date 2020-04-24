@@ -2,8 +2,6 @@
 <img src=/doc_files/pyclassifier.png alt="drawing" width="275"/>
 
 Python package for making custom genome annotation algorithms with Hidden semi-Markov Models
-Created by: Anders Rasmussen, Mariano Gabitto
-
 
 
 # Installing
