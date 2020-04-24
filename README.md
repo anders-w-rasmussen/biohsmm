@@ -67,6 +67,8 @@ plt.show()
 
 ```
 
+<img src=/doc_files/obs.png alt="drawing" width="600"/>
+
 Now lets create an HsMM model
 
 ```python
@@ -77,7 +79,7 @@ import emissions as emits
 # State list
 state_list = []
 
-# Emission list for state 1
+# Emission list for state 1 (background)
 emit_1 = []
 emit_1.append(emits.normal_dist_emit([0, 100, 5, 1], emit_name='norm_emit'))
 emit_1.append(emits.binary([5000, 10], emit_name='bern_emit'))
@@ -102,9 +104,47 @@ state_list.append(states.Negative_Binomial('silencer', 3, pseudo_3, emit_3))
 
 pi_prior = [1, 1, 1]
 tmat_prior = np.ones((3, 3)) - np.identity(3)
-hsmm_model = model(pi_prior, tmat_prior, state_list)
+hsmm_model = model(pi_prior, tmat_prior, state_list) 
 
-'''  
+```
+
+Now let's train the model on the observations we simulated and decode
+
+```python
+# Train the model
+start_base = 0
+obs_list = [normal_observations, binary_observations]
+hsmm_model.train(obs_list, start_base, 12)
+
+# Return marginal probabilities of each state (decode)
+
+enhancer_marg  = hsmm_model.give_gammas(obs_list, start_base, 1)
+silencer_marg = hsmm_model.give_gammas(obs_list, start_base, 2)
+```
+
+Plot the marginal state probabilities to see our states 
+
+
+```python
+# Plot these observations
+plt.subplot(211)
+plt.title('Enhancer MargProb')
+plt.plot(enhancer_marg)
+plt.subplot(212)
+plt.title('Silencer MargProb')
+plt.plot(silencer_marg)
+plt.show()
+```
+
+<img src=/doc_files/margProbs.png alt="drawing" width="600"/>
+
+
+
+
+
+
+
+
 
 
 
