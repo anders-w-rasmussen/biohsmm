@@ -7,7 +7,7 @@ Python package for making custom genome annotation algorithms with Hidden semi-M
 # Installing
 
 ```bash
-> pip install git https://github.com/anders-w-rasmussen/biohsmm
+> pip install git+https://github.com/anders-w-rasmussen/biohsmm
 ```
 
 You need to have eigen3 installed. (eigen.tuxfamily.org), version 3+ (gonna fix this in the future). 
