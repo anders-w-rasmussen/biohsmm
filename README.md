@@ -70,9 +70,9 @@ plt.show()
 Now lets create an HsMM model
 
 ```python
-from model import model_1 as model
-import states as states
-import emissions as emits
+from biohsmm.model import model_1 as model
+import biohsmm.states as states
+import biohsmm.emissions as emits
 
 # State list
 state_list = []
