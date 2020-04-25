@@ -1,4 +1,4 @@
-# peakmaker
+# biohsmm
 <img src=/doc_files/pyclassifier.png alt="drawing" width="275"/>
 
 Python package for making custom genome annotation algorithms with Hidden semi-Markov Models
@@ -7,11 +7,11 @@ Python package for making custom genome annotation algorithms with Hidden semi-M
 # Installing
 
 ```bash
-> pip install git https://github.com/anders-w-rasmussen/peakmaker
+> pip install git https://github.com/anders-w-rasmussen/biohsmm
 ```
 
 You need to have eigen3 installed. (eigen.tuxfamily.org), version 3+ (gonna fix this in the future). 
-Next go to the folder where peak-maker is installed cd into directory util/
+Next go to the folder where biohsmm is installed cd into directory util/
 
 ```bash
 > export EIGENPATH=/path/to/eigen3/ 
