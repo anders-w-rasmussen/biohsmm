@@ -1,0 +1,6 @@
+README.md
+setup.py
+biohsmm.egg-info/PKG-INFO
+biohsmm.egg-info/SOURCES.txt
+biohsmm.egg-info/dependency_links.txt
+biohsmm.egg-info/top_level.txt
