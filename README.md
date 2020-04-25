@@ -15,7 +15,7 @@ Next go to the folder where biohsmm is installed cd into directory util/
 
 ```bash
 > export EIGENPATH=/path/to/eigen3/ 
-> g++ libbwdbwd.cpp -o libfwdbwd.so --shared -fPIC -DNDEBUG -O3 -I$EIGENPATH 
+> g++ libfwdbwd.cpp -o libfwdbwd.so --shared -fPIC -DNDEBUG -O3 -I$EIGENPATH 
 ```
 
 # Using the package
