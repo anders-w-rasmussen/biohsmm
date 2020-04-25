@@ -4,11 +4,11 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="biohsmm-anders-w-rasmussen", # Replace with your own username
+    name="biohsmm", 
     version="0.1",
-    author="Example Author",
+    author="Anders Rasmussen",
     author_email="arasmussen@flatironinstitute.org",
-    description="A small example package",
+    description="Package for making HsMMs for applications in genomics",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/anders-w-rasmussen/biohsmm",
