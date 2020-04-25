@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 import numpy as np
 from scipy.special import psi
-from util.likelihood_calcs import calc_likelihood
-from util.baum_welch import baum_welch_alg, decode
+from .util.likelihood_calcs import calc_likelihood
+from .util.baum_welch import baum_welch_alg, decode
 from time import time
 
 # Abstract state type model
