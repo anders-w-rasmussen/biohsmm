@@ -11,7 +11,7 @@ Python package for making custom genome annotation algorithms with Hidden semi-M
 ```
 
 You need to have eigen3 installed. (eigen.tuxfamily.org), version 3+ (gonna fix this in the future). 
-Next go to the folder where biohsmm is installed cd into directory util/
+Download libfwdbwd.cpp which is in util biohsmm/util folder. Next go to the folder where biohsmm is installed cd into directory util/ and place that file there. Then run:
 
 ```bash
 > export EIGENPATH=/path/to/eigen3/ 
