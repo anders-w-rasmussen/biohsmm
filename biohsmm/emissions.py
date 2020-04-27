@@ -80,59 +80,6 @@ class binary:
         self.p0 = psi(self.pseudo0 + p0_ss) - psi(self.pseudo0 + p0_ss + self.pseudo1 + p1_ss)
 
 
-class atac_seq:
-    ''' ATAC-seq emissions for 3 x T vector of cut and read length counts '''
-
-    def __init__(self, prior_pseudocounts, emit_name='atac-seq'):
-
-        # Emission name
-        self.emit_name = emit_name
-
-        # Pseudocounts for emitting a 0 (failure) or 1 (success)
-        self.prior_cut0 = prior_pseudocounts[0]
-        self.prior_cut1 = prior_pseudocounts[1]
-        self.prior_rl0 = prior_pseudocounts[2]
-        self.prior_rl1 = prior_pseudocounts[3]
-
-        # Emission probabilities from prior pseudocounts
-        self.cut0 = psi(self.prior_cut0) - psi(self.prior_cut0 + self.prior_cut1)
-        self.cut1 = psi(self.prior_cut1) - psi(self.prior_cut0 + self.prior_cut1)
-        self.rl0 = psi(self.prior_rl0) - psi(self.prior_rl0 + self.prior_rl1)
-        self.rl1 = psi(self.prior_rl1) - psi(self.prior_rl0 + self.prior_rl1)
-
-    def likelihood(self, obs):
-
-        T = np.size(obs, axis=0)
-        likelihood = np.zeros(T)
-
-        cut = obs[:, 0]
-        rl = obs[:, 1:]
-
-        likelihood = (cut * self.cut0 + (1 - (cut > 0)) * self.cut1)
-        likelihood += (rl[:, 0] * self.rl0 + rl[:, 1] * self.rl1)
-
-        exp_like = np.exp(likelihood)
-
-        return exp_like
-
-    def update_state_parameters(self, obs, gammas):
-
-        T = np.size(obs, axis=0)
-
-        # Calculate expected counts
-
-        cut0_ss = np.dot(obs[:, 0], gammas)
-        cut1_ss = np.dot(1.0 - (obs[:, 0] > 0), gammas)
-        rl0_ss = np.dot(obs[:, 1], gammas)
-        rl1_ss = np.dot(obs[:, 2],  gammas)
-
-        # Update posterior
-
-        self.cut0 = psi(self.prior_cut0 + cut0_ss) - psi(self.prior_cut0 + cut0_ss + self.prior_cut1 + cut1_ss)
-        self.cut1 = psi(self.prior_cut1 + cut1_ss) - psi(self.prior_cut0 + cut0_ss + self.prior_cut1 + cut1_ss)
-        self.rl0 = psi(self.prior_rl0 + rl0_ss) - psi(self.prior_rl0 + rl0_ss + self.prior_rl1 + rl1_ss)
-        self.rl1 = psi(self.prior_rl1 + rl1_ss) - psi(self.prior_rl0 + rl0_ss + self.prior_rl1 + rl1_ss)
-
 class normal_dist_emit:
     ''' Normally distributed observation with mean and variance inferred. '''
 
@@ -223,42 +170,3 @@ class normal_dist_emit:
         # # Update the parameters
         # self.mu = mu_N
         # self.precision = (alpha_N / beta_N)
-
-
-class normal_dist_known_precision_vector:
-    ''' Normally distributed observation. Mean inferred for each base, precision known for each observation. '''
-
-    def __init__(self, mu_0, tau_0, known_precisions, emit_name='norm_effect_fixed_precisions'):
-
-        # Emission name
-        self.emit_name = emit_name
-
-        self.precisions = known_precisions
-
-        # Prior Hyperparameters
-        self.mu_0 = mu_0
-        self.tau_0 = tau_0
-
-        self.mu = cp.copy(self.mu_0)
-        self.tau = cp.copy(self.tau_0)
-
-    def likelihood(self, obs):
-
-        T = np.size(obs)
-        likelihood = np.ones(T)
-        likelihood[np.argwhere(np.isnan(obs) == False)] = norm.pdf(obs[np.argwhere(np.isnan(obs) == False)], self.mu,
-                                                                   np.sqrt((self.precisions[np.argwhere(np.isnan(obs) == False)]) ** (-1.0)))
-
-        # # Calculate likelihood vector
-        # for i in range(0, T):
-        #     if np.isnan(obs[i]) == False:
-        #         likelihood[i] = norm.pdf(obs[i], self.mus[i], np.sqrt(float(self.precisions[i])**(-1.0)))
-        #     else:
-        #         likelihood[i] = 1
-
-        return likelihood
-
-    def update_state_parameters(self, obs, gammas):
-
-        idxs = [np.argwhere(np.isnan(obs) == False)]
-        self.mu = (self.tau_0 * self.mu_0 + np.sum(self.precisions[idxs] * obs[idxs] * gammas[idxs])) / (self.tau_0 + np.sum((self.precisions[idxs] * gammas[idxs])))
