@@ -8,9 +8,9 @@ Exponential
 Uniform 
 
 Durations: 
-Geometric
-Binomial
-Fixed Length
+Geometric  
+Binomial  
+Fixed Length  
 
 
 # Emissions
