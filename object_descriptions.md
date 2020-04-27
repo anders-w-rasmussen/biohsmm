@@ -1,4 +1,6 @@
-# To add
+# To Do
+
+Fix the initial probability (doesn't update)  
 
 Emits (common dists):  
 Categorical Distribution  
